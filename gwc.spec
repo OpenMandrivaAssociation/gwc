@@ -15,7 +15,10 @@ Source1: 	%{name}_16.png
 Source2: 	%{name}_32.png
 Source3: 	%{name}_48.png
 Patch0:		%{name}-0.21.08-fix-makefiles.patch
-BuildRequires: 	libfftw2-devel libsndfile-devel libdb1-devel libgnome2-devel libgnomeui2-devel
+BuildRequires: 	fftw-devel
+BuildRequires: 	sndfile-devel
+BuildRequires: 	db1-devel
+BuildRequires: 	gnomeui2-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
