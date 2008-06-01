@@ -19,7 +19,6 @@ BuildRequires: 	fftw-devel
 BuildRequires: 	sndfile-devel
 BuildRequires: 	db1-devel
 BuildRequires: 	gnomeui2-devel
-BuildRequires: 	gnome-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
