@@ -1,7 +1,7 @@
 %define name gwc
 %define gwc_version 0.21
 %define gwc_subversion 08
-%define release %mkrel 2
+%define release %mkrel 3
 
 Name:		%{name}
 Version:	%{gwc_version}.%{gwc_subversion}
