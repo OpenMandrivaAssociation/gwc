@@ -1,0 +1,68 @@
+diff -Naur --exclude '*~' gwc-0.21-08/Makefile.in gwc-0.21-08-fix-makefiles/Makefile.in
+--- gwc-0.21-08/Makefile.in	2006-10-20 18:52:56.000000000 +0200
++++ gwc-0.21-08-fix-makefiles/Makefile.in	2008-06-01 15:23:17.000000000 +0200
+@@ -5,11 +5,11 @@
+ DATADIR = @datadir@
+ LIBDIR = @libdir@
+ SYSCONFDIR = @sysconfdir@
+-APPNAME = gnome_wave_cleaner
++APPNAME = gwc
+ GNOME = @GNOME_BASE@
+ 
+ pixmapdir = $(DATADIR)/pixmaps
+-HELPDIR = ${prefix}/$(GNOME)/share/gnome/help/$(APPNAME)
++HELPDIR = $(DATADIR)/gnome/help/$(APPNAME)
+ HELPDIRC = $(HELPDIR)/C
+ DOCDIR = $(DATADIR)/doc/gwc
+ 
+@@ -22,7 +22,8 @@
+ CONFIGDIR = /$(APPNAME)/config/
+ 
+ DEFS = -DDATADIR=\"$(DATADIR)\" -DLIBDIR=\"$(LIBDIR)\" -DAPPNAME=\"$(APPNAME)\" @ALSAHDR@ @FFTWHDR@ @FFTWPREC@
+-CFLAGS = -Wall -O6 @GNOMEUI_CFLAGS@ @SNDFILE_CFLAGS@
++GNOMEUI_CFLAGS = @GNOMEUI_CFLAGS@
++SNDFILE_CFLAGS = @SNDFILE_CFLAGS@
+ 
+ LIBS= meschach.a @GNOMEUI_LIBS@ @SNDFILE_LIBS@ @ALSALIB@ @FFTWLIB@ -lm
+ 
+@@ -37,7 +38,7 @@
+ 
+ ###
+ CC = @CC@
+-COMPILE = $(CC) $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS)
++COMPILE = $(CC) $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(GNOMEUI_CFLAGS) $(SNDFILE_CFLAGS)
+ 
+ ### handy to have around for checking buffer overruns
+ #EFENCE = -lefence
+@@ -55,14 +56,14 @@
+ 	$(COMPILE) -c $<
+ 
+ install : gwc
+-	install -d $(BINDIR)
+-	install -d $(DOCDIR)
+-	install -d $(pixmapdir)
+-	install -d $(HELPDIRC)
+-	install -p -s $(BINFILES) $(BINDIR)
+-	install -p -m 0644 $(DOCFILES) $(DOCDIR)
+-	for hf in $(HELPFILES) ; do install -p -m 0644 $(HELPFILESSRCD)/$$hf $(HELPDIRC) ; done
+-	install -p -m 0644 $(pixmap_DATA) $(pixmapdir)
++	install -d $(DESTDIR)/$(BINDIR)
++	install -d $(DESTDIR)/$(DOCDIR)
++	install -d $(DESTDIR)/$(pixmapdir)
++	install -d $(DESTDIR)/$(HELPDIRC)
++	install -p -s $(BINFILES) $(DESTDIR)/$(BINDIR)
++	install -p -m 0644 $(DOCFILES) $(DESTDIR)/$(DOCDIR)
++	for hf in $(HELPFILES) ; do install -p -m 0644 $(HELPFILESSRCD)/$$hf $(DESTDIR)/$(HELPDIRC) ; done
++	install -p -m 0644 $(pixmap_DATA) $(DESTDIR)/$(pixmapdir)
+ 
+ uninstall :
+ 	( cd $(BINDIR) && rm -f $(BINFILES) )
+@@ -75,7 +76,7 @@
+ 	cp meschach/meschach.a .
+ 
+ meschach/meschach.a :
+-	(cd meschach ; ./configure --with-sparse ; make part1 ; make part2 ; make part3 ; cp machine.h ..)
++	(cd meschach ; ./configure --with-sparse; make part1 part2 part3 CFLAGS="$(CFLAGS)" ; cp machine.h ..)
+ 
+ test : test.c
+ 	$(CC) test.c $(LFLAGS) -g -lrfftw -lfftw -lm -o test
