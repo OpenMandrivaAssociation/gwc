@@ -1,0 +1,11 @@
+--- gwc-0.21-08/Makefile.in.nostrip	2012-11-05 20:58:53.077780341 +0400
++++ gwc-0.21-08/Makefile.in	2012-11-05 21:00:34.882780488 +0400
+@@ -60,7 +60,7 @@ install : gwc
+ 	install -d $(DESTDIR)/$(DOCDIR)
+ 	install -d $(DESTDIR)/$(pixmapdir)
+ 	install -d $(DESTDIR)/$(HELPDIRC)
+-	install -p -s $(BINFILES) $(DESTDIR)/$(BINDIR)
++	install -p $(BINFILES) $(DESTDIR)/$(BINDIR)
+ 	install -p -m 0644 $(DOCFILES) $(DESTDIR)/$(DOCDIR)
+ 	for hf in $(HELPFILES) ; do install -p -m 0644 $(HELPFILESSRCD)/$$hf $(DESTDIR)/$(HELPDIRC) ; done
+ 	install -p -m 0644 $(pixmap_DATA) $(DESTDIR)/$(pixmapdir)

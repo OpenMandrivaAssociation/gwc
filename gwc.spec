@@ -15,11 +15,11 @@ Source1: 	%{name}_16.png
 Source2: 	%{name}_32.png
 Source3: 	%{name}_48.png
 Patch0:		%{name}-0.21.08-fix-makefiles.patch
-BuildRequires: 	fftw-devel
+patch1:		gwc-0.21-08.nostrip.patch
+BuildRequires: 	pkgconfig(fftw3)
 BuildRequires: 	sndfile-devel
 BuildRequires: 	db1-devel
-BuildRequires: 	gnomeui2-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}
+BuildRequires: 	pkgconfig(libgnomeui-2.0)
 
 %description
 Gnome Wave Cleaner (GWC), is a tool for cleaning
@@ -33,14 +33,14 @@ algorithms.
 %prep
 %setup -q -n %{name}-%{gwc_version}-%{gwc_subversion}
 %patch0 -p 1
+%patch1 -p1 -b .nostrip
 
 %build
 %configure2_5x
 %make
 
 %install
-rm -rf %{buildroot}
-
+chmod go+r biquad.[ch]
 %makeinstall_std
 
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/applications
@@ -69,19 +69,6 @@ Categories=AudioVideo;Audio;AudioVideoEditing;
 MimeType=audio/x-wav;
 EOF
 
-%if %mdkversion < 200900
-%post
-%update_menus
-%endif
-
-%if %mdkversion < 200900
-%postun
-%clean_menus
-%endif
-
-%clean
-rm -rf %{buildroot}
-
 %files
 %defattr(-,root,root)
 %doc README COPYING Changelog
@@ -95,3 +82,28 @@ rm -rf %{buildroot}
 %{_datadir}/pixmaps/gwc-logo.png
 %{_datadir}/applications/mandriva-%{name}.desktop
 
+
+
+%changelog
+* Fri Dec 10 2010 Oden Eriksson <oeriksson@mandriva.com> 0.21.08-4mdv2011.0
++ Revision: 619320
+- the mass rebuild of 2010.0 packages
+
+* Fri Sep 04 2009 Thierry Vignaud <tv@mandriva.org> 0.21.08-3mdv2010.0
++ Revision: 429348
+- rebuild
+
+* Thu Aug 07 2008 Thierry Vignaud <tv@mandriva.org> 0.21.08-2mdv2009.0
++ Revision: 267037
+- rebuild early 2009.0 package (before pixel changes)
+
+  + Pixel <pixel@mandriva.com>
+    - rpm filetriggers deprecates update_menus/update_scrollkeeper/update_mime_database/update_icon_cache/update_desktop_database/post_install_gconf_schemas
+
+* Sun Jun 01 2008 Guillaume Rousse <guillomovitch@mandriva.org> 0.21.08-1mdv2009.0
++ Revision: 214053
+- import gwc
+
+
+* Sat May 31 2008 Guillaume Rousse <guillomovitch@mandriva.org> 0.21.08-1mdv2009.0
+- contributed by Maxim Heijndijk <macchus at gmail dot com>
