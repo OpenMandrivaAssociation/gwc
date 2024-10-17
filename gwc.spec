@@ -9,7 +9,7 @@ Release: 	%{release}
 Summary: 	Audio restoration application
 License: 	GPL
 Group: 		Sound
-URL: 		http://gwc.sourceforge.net/
+URL: 		https://gwc.sourceforge.net/
 Source0: 	http://downloads.sourceforge.net/gwc/%{name}-%{gwc_version}-%{gwc_subversion}.tar.bz2
 Source1: 	%{name}_16.png
 Source2: 	%{name}_32.png
