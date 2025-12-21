@@ -16,6 +16,11 @@ Source2: 	%{name}_32.png
 Source3: 	%{name}_48.png
 Patch0:		%{name}-0.21.08-fix-makefiles.patch
 patch1:		gwc-0.21-08.nostrip.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires: 	pkgconfig(fftw3)
 BuildRequires: 	sndfile-devel
 BuildRequires: 	db1-devel
